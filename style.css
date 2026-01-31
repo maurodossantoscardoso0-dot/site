@@ -1,0 +1,59 @@
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI}
+body{background:#050b1e;color:#e0f7ff;scroll-behavior:smooth}
+
+header{
+position:fixed;top:0;width:100%;
+display:flex;justify-content:space-between;
+align-items:center;padding:15px 40px;
+background:rgba(0,0,0,.85);z-index:1000}
+
+.logo-area{display:flex;align-items:center;gap:10px}
+.logo-area img{width:50px}
+
+nav a{color:#7ddfff;margin-left:20px;text-decoration:none}
+nav a:hover{color:#fff}
+
+.section{
+min-height:100vh;padding:120px 60px;text-align:center}
+
+.hero{
+display:flex;flex-direction:column;justify-content:center;
+background:radial-gradient(circle,#0a1f44,#000)}
+
+.hero h1{font-size:3.5rem;color:#7ddfff}
+.hero p{margin:20px 0}
+
+button{
+padding:14px 35px;border:none;border-radius:30px;
+background:#7ddfff;color:#000;font-weight:bold;cursor:pointer}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;margin-top:50px}
+
+.card{
+background:rgba(0,140,255,.08);
+border:1px solid #7ddfff;
+border-radius:20px;padding:30px;
+transition:.4s}
+
+.card:hover{
+transform:translateY(-10px) scale(1.02);
+box-shadow:0 0 20px #7ddfff}
+
+.link{text-decoration:none;color:#7ddfff}
+
+footer{
+padding:30px;text-align:center;
+border-top:1px solid #7ddfff}
+
+/* Scroll animation */
+.reveal{
+opacity:0;
+transform:translateY(60px);
+transition:1s ease}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0)}

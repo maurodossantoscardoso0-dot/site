@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Alocação de Estagiários - TICNES AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏢 Sistema de Alocação de Estagiários</h1>
+            <p class="subtitle">TICNES AI - Otimização Inteligente de Recursos</p>
+        </header>
+        
+        <div class="tab-container">
+            <button class="tab active" onclick="openTab('tab1')">📋 Cadastro</button>
+            <button class="tab" onclick="openTab('tab2')">🗺️ Alocação</button>
+            <button class="tab" onclick="openTab('tab3')">📊 Resultados</button>
+            <button class="tab" onclick="openTab('tab4')">⚙️ Configurações</button>
+        </div>
+        
+        <div class="main-content">
+            <!-- TAB 1: CADASTRO -->
+            <div id="tab1" class="tab-content active">
+                <div class="panel">
+                    <h2 class="panel-title">👤 Cadastrar Estagiário</h2>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="internName">Nome Completo *</label>
+                            <input type="text" id="internName" placeholder="Digite o nome do estagiário">
+                        </div>
+                        <div class="input-group">
+                            <label for="internEmail">E-mail *</label>
+                            <input type="email" id="internEmail" placeholder="email@exemplo.com">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="internArea">Área de Atuação *</label>
+                            <select id="internArea">
+                                <option value="">Selecione uma área</option>
+                                <option value="ti">Tecnologia da Informação</option>
+                                <option value="adm">Administração</option>
+                                <option value="eng">Engenharia</option>
+                                <option value="saude">Saúde</option>
+                                <option value="educ">Educação</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="internLocation">Localização</label>
+                            <input type="text" id="internLocation" placeholder="00000-000" maxlength="9">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="internAvailability">Disponibilidade (horas/semana)</label>
+                            <select id="internAvailability">
+                                <option value="20">1 hora</option>
+                                <option value="30" selected>2 horas</option>
+                                <option value="40">3 horas</option>
+                                <option value="60">4 horas</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="internPeriod">Período</label>
+                            <select id="internPeriod">
+                                <option value="manha">Manhã</option>
+                                <option value="tarde">Tarde</option>
+                                <option value="noite">Noite</option>
+                                <option value="integral">Integral</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="internSkills">Habilidades/Competências</label>
+                        <textarea id="internSkills" rows="3" placeholder="Descreva as habilidades do estagiário..."></textarea>
+                    </div>
+                    
+                    <div class="buttons-group">
+                        <button class="btn" onclick="addIntern()">➕ Adicionar Estagiário</button>
+                        <button class="btn btn-secondary" onclick="clearForm()">🗑️ Limpar Formulário</button>
+                        <button class="btn btn-success" onclick="importDemoData()">📥 Importar Dados Demo</button>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2 class="panel-title">🏢 Cadastrar Centro de Estágio</h2>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="centerName">Nome do Centro *</label>
+                            <input type="text" id="centerName" placeholder="Nome do centro de estágio">
+                        </div>
+                        <div class="input-group">
+                            <label for="centerLocation">Localização</label>
+                            <input type="text" id="centerLocation" placeholder="00000-000" maxlength="9">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="centerCapacity">Capacidade (vagas) *</label>
+                            <input type="number" id="centerCapacity" min="1" max="100" value="10">
+                        </div>
+                        <div class="input-group">
+                            <label for="centerAreas">Áreas Atendidas *</label>
+                            <select id="centerAreas" multiple>
+                                <option value="ti">Tecnologia da Informação</option>
+                                <option value="adm">Administração</option>
+                                <option value="eng">Engenharia</option>
+                                <option value="saude">Saúde</option>
+                                <option value="educ">Educação</option>
+                            </select>
+                            <small style="color: #6c757d; margin-top: 5px; display: block">Segure Ctrl para selecionar múltiplas áreas</small>
+                        </div>
+                    </div>
+                    
+                    <div class="buttons-group">
+                        <button class="btn" onclick="addCenter()">🏢 Adicionar Centro</button>
+                        <button class="btn btn-secondary" onclick="clearCenterForm()">Limpar</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TAB 2: ALOCAÇÃO -->
+            <div id="tab2" class="tab-content">
+                <div class="panel">
+                    <h2 class="panel-title">⚙️ Configurar Alocação</h2>
+                    
+                    <div class="data-display">
+                        <div class="data-card">
+                            <h3>Estagiários Cadastrados</h3>
+                            <div class="data-value" id="totalInterns">0</div>
+                        </div>
+                        <div class="data-card">
+                            <h3>Centros Disponíveis</h3>
+                            <div class="data-value" id="totalCenters">0</div>
+                        </div>
+                        <div class="data-card">
+                            <h3>Vagas Totais</h3>
+                            <div class="data-value" id="totalVacancies">0</div>
+                        </div>
+                        <div class="data-card">
+                            <h3>Status</h3>
+                            <div class="data-value" id="allocationStatus">Aguardando</div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Critérios de Alocação</label>
+                        <div style="display: flex; gap: 20px; margin-top: 10px; flex-wrap: wrap;">
+                            <label style="display: flex; align-items: center; gap: 5px;">
+                                <input type="checkbox" id="criterionProximity" checked> Proximidade Geográfica
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 5px;">
+                                <input type="checkbox" id="criterionArea" checked> Compatibilidade de Área
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 5px;">
+                                <input type="checkbox" id="criterionAvailability" checked> Disponibilidade
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="maxDistance">Distância Máxima (km)</label>
+                        <input type="range" id="maxDistance" min="1" max="100" value="50" oninput="updateDistanceValue()">
+                        <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                            <span>1 km</span>
+                            <span id="distanceValue">50 km</span>
+                            <span>100 km</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="distanceProgress" style="width: 50%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="buttons-group">
+                        <button class="btn btn-success" onclick="runAllocation()">🚀 Executar Alocação</button>
+                        <button class="btn" onclick="simulateAllocation()">🔍 Simular Alocação</button>
+                        <button class="btn btn-secondary" onclick="exportData()">📤 Exportar Dados</button>
+                        <button class="btn btn-danger" onclick="resetAllocation()">🔄 Reiniciar Alocação</button>
+                    </div>
+                    
+                    <div class="log-container" id="allocationLog">
+                        <div class="log-entry info">
+                            <div class="log-time" id="logTime"></div>
+                            <div class="log-message">Sistema pronto para alocação. Configure os critérios e clique em "Executar Alocação"</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2 class="panel-title">🗺️ Mapa de Distribuição</h2>
+                    <div class="map-container" id="mapContainer">
+                        <div style="font-size: 2rem;">🌍</div>
+                        <strong>Mapa de Distribuição Geográfica</strong>
+                        <small style="font-size: 0.9rem;">Visualize a distribuição de estagiários e centros</small>
+                    </div>
+                    
+                    <div class="buttons-group" style="margin-top: 20px;">
+                        <button class="btn" onclick="showHeatMap()">🔥 Mapa de Calor</button>
+                        <button class="btn" onclick="showDistribution()">📈 Ver Distribuição</button>
+                        <button class="btn" onclick="suggestNewCenters()">💡 Sugerir Novos Centros</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TAB 3: RESULTADOS -->
+            <div id="tab3" class="tab-content">
+                <div class="panel">
+                    <h2 class="panel-title">📊 Resultados da Alocação</h2>
+                    
+                    <div class="data-display">
+                        <div class="data-card">
+                            <h3>Alocados</h3>
+                            <div class="data-value success" id="allocatedCount">0</div>
+                        </div>
+                        <div class="data-card">
+                            <h3>Pendentes</h3>
+                            <div class="data-value warning" id="pendingCount">0</div>
+                        </div>
+                        <div class="data-card">
+                            <h3>Excedentes</h3>
+                            <div class="data-value danger" id="excessCount">0</div>
+                        </div>
+                        <div class="data-card">
+                            <h3>Eficiência</h3>
+                            <div class="data-value" id="efficiencyRate">0%</div>
+                        </div>
+                    </div>
+                    
+                    <div id="resultsContainer">
+                        <div style="text-align: center; padding: 40px 20px; color: #6c757d;">
+                            <div style="font-size: 3rem; margin-bottom: 20px;">📋</div>
+                            <h3>Nenhum resultado disponível</h3>
+                            <p>Execute a alocação na aba "Alocação" para ver os resultados</p>
+                        </div>
+                    </div>
+                    
+                    <div id="resultsTableContainer" style="display: none;">
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Estagiário</th>
+                                    <th>Área</th>
+                                    <th>Centro Alocado</th>
+                                    <th>Distância</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultsTable">
+                                <!-- Dados serão inseridos via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="buttons-group" style="margin-top: 20px;">
+                        <button class="btn" onclick="generateReport()">📄 Gerar Relatório PDF</button>
+                        <button class="btn btn-success" onclick="optimizeAllocation()">⚡ Otimizar Alocação</button>
+                        <button class="btn btn-secondary" onclick="clearResults()">🗑️ Limpar Resultados</button>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2 class="panel-title">📈 Análises e Estatísticas</h2>
+                    <div id="analyticsContainer">
+                        <div style="text-align: center; padding: 30px 20px; color: #6c757d;">
+                            <div style="font-size: 2.5rem; margin-bottom: 15px;">📊</div>
+                            <h3>Estatísticas não disponíveis</h3>
+                            <p>Execute a alocação para ver análises detalhadas</p>
+                        </div>
+                    </div>
+                    
+                    <div class="log-container" style="height: 200px; margin-top: 20px;">
+                        <h3 style="margin-bottom: 10px;">📋 Sugestões do Sistema</h3>
+                        <div id="suggestionsList">
+                            <p style="color: #6c757d; text-align: center; padding: 20px;">
+                                Execute a alocação para ver sugestões personalizadas.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TAB 4: CONFIGURAÇÕES -->
+            <div id="tab4" class="tab-content">
+                <div class="panel">
+                    <h2 class="panel-title">⚙️ Configurações do Sistema</h2>
+                    
+                    <div class="input-group">
+                        <label for="systemMode">Modo de Operação</label>
+                        <select id="systemMode">
+                            <option value="automatic">Automático</option>
+                            <option value="semi">Semi-automático</option>
+                            <option value="manual">Manual</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="notificationPref">Notificações</label>
+                        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                            <label style="display: flex; align-items: center; gap: 5px;">
+                                <input type="checkbox" id="notifyEmail" checked> E-mail
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 5px;">
+                                <input type="checkbox" id="notifyDashboard" checked> Dashboard
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 5px;">
+                                <input type="checkbox" id="notifyReport"> Relatórios Automáticos
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="dataRetention">Retenção de Dados (meses)</label>
+                        <input type="number" id="dataRetention" min="1" max="60" value="12">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="algorithmPreference">Algoritmo de Alocação Preferido</label>
+                        <select id="algorithmPreference">
+                            <option value="distance">Priorizar Proximidade</option>
+                            <option value="capacity">Priorizar Capacidade</option>
+                            <option value="balanced">Balanceado</option>
+                            <option value="custom">Personalizado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="buttons-group">
+                        <button class="btn" onclick="saveSettings()">💾 Salvar Configurações</button>
+                        <button class="btn btn-secondary" onclick="resetSettings()">🔄 Restaurar Padrões</button>
+                        <button class="btn btn-danger" onclick="clearAllData()">🗑️ Limpar Todos os Dados</button>
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <h2 class="panel-title">🔄 Backup e Restauração</h2>
+                    
+                    <div class="input-group">
+                        <label>Backup Automático</label>
+                        <select id="backupFrequency">
+                            <option value="daily">Diário</option>
+                            <option value="weekly" selected>Semanal</option>
+                            <option value="monthly">Mensal</option>
+                            <option value="never">Nunca</option>
+                        </select>
+                    </div>
+                    
+                    <div class="backup-list" id="backupList">
+                        <div class="backup-item">
+                            <div>
+                                <strong>Backup Inicial</strong>
+                                <div style="font-size: 0.8rem; color: #6c757d;">Criado: 29/01/2024</div>
+                            </div>
+                            <button class="btn" style="padding: 8px 15px;" onclick="restoreBackup('initial')">Restaurar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="buttons-group">
+                        <button class="btn" onclick="createBackup()">💾 Criar Backup Agora</button>
+                        <button class="btn" onclick="restoreBackup()">📂 Restaurar Backup</button>
+                        <button class="btn btn-secondary" onclick="exportAllData()">📤 Exportar Todos os Dados</button>
+                    </div>
+                    
+                    <div class="log-container" style="height: 150px; margin-top: 20px;">
+                        <h3 style="margin-bottom: 10px;">📝 Log do Sistema</h3>
+                        <div id="systemLog">
+                            <!-- Logs serão inseridos aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="padding: 20px; background: #f8f9fa; border-top: 1px solid #dee2e6; text-align: center; color: #6c757d;">
+            <p>© 2024 TICNES AI - Sistema de Alocação Inteligente de Estagiários | v2.1.0</p>
+            <p style="font-size: 0.9rem; margin-top: 5px;" id="systemInfo"></p>
+        </div>
+    </div>
+     <script src="script.js"></script>
+</body>
+</html>

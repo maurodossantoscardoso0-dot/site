@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ticnes AI | Tecnologia & Inovação</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<style>
+:root{
+  --azul:#00e5ff;
+  --azul-claro:#7cf9ff;
+  --fundo:#02040f;
+  --card:rgba(255,255,255,0.06);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+  color:#fff;
+  scroll-behavior:smooth;
+  background:
+    radial-gradient(circle at top, rgba(0,229,255,0.15), transparent 60%),
+    radial-gradient(circle at bottom, rgba(0,229,255,0.08), transparent 60%),
+    url("https://www.transparenttextures.com/patterns/stardust.png"),
+    var(--fundo);
+}
+
+/* LOADER */
+#loader{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:3000
+}
+.spinner{
+  width:60px;height:60px;
+  border:5px solid #222;
+  border-top:5px solid var(--azul);
+  border-radius:50%;
+  animation:spin 1s linear infinite
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* HEADER */
+header{
+  position:fixed;
+  top:0;width:100%;
+  background:rgba(0,0,0,0.65);
+  backdrop-filter:blur(12px);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 40px;
+  z-index:2000
+}
+header img{height:40px}
+nav a{
+  color:#fff;
+  margin:0 15px;
+  text-decoration:none;
+  font-weight:500;
+  position:relative
+}
+nav a::after{
+  content:"";
+  position:absolute;
+  width:0;height:2px;
+  background:var(--azul);
+  left:0;bottom:-5px;
+  transition:.3s
+}
+nav a:hover::after{width:100%}
+
+/* HERO */
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding-top:80px
+}
+.hero h1{font-size:3.5rem}
+.hero span{color:var(--azul)}
+.hero p{margin:20px 0;font-size:1.2rem;color:#ccc}
+.hero button{
+  padding:15px 35px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(45deg,var(--azul),var(--azul-claro));
+  color:#000;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s
+}
+.hero button:hover{transform:scale(1.07)}
+
+/* SECTIONS */
+.section{padding:120px 10%}
+.section h2{text-align:center;font-size:2.5rem;margin-bottom:60px}
+
+/* CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px
+}
+.card{
+  background:var(--card);
+  padding:30px;
+  border-radius:20px;
+  backdrop-filter:blur(12px);
+  transition:.4s;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08)
+}
+.card:hover{transform:translateY(-12px)}
+.card h3{margin-bottom:10px;color:var(--azul)}
+
+/* IMPACTOS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:30px;
+  text-align:center
+}
+.stat{
+  background:var(--card);
+  padding:35px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.08)
+}
+.stat h3{
+  font-size:40px;
+  color:var(--azul)
+}
+
+/* CONTACTOS */
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+  margin-bottom:60px
+}
+
+.contact-card{
+  background:var(--card);
+  padding:30px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.08)
+}
+
+.contact-card h3{
+  color:var(--azul);
+  margin-bottom:10px
+}
+
+/* FORM */
+form{
+  max-width:600px;
+  margin:auto;
+  display:grid;
+  gap:15px
+}
+input,textarea{
+  padding:14px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.2);
+  background:#0a0f1f;
+  color:#fff
+}
+form button{
+  background:linear-gradient(45deg,var(--azul),var(--azul-claro));
+  border:none;
+  padding:14px;
+  border-radius:30px;
+  font-weight:600;
+  cursor:pointer
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  background:#01030a;
+  color:#aaa
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader"><div class="spinner"></div></div>
+
+<header>
+  <div style="display:flex;align-items:center;gap:10px">
+    <img src="Ticnes Ai.jpg" alt="Ticnes AI">
+    <strong>TICNES AI</strong>
+  </div>
+  <nav>
+    <a href="#home">Início</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#contactos">Contactos</a>
+    <a href="#estagiario">Estagiário</a>
+  </nav>
+</header>
+
+<section id="home" class="hero">
+  <h1>Inteligência Artificial & <span>Inovação Digital</span></h1>
+  <p>Soluções tecnológicas avançadas para o futuro das organizações</p>
+  <button onclick="document.getElementById('servicos').scrollIntoView()">Explorar</button>
+</section>
+
+<section id="sobre" class="section">
+  <h2>Sobre a Ticnes AI</h2>
+  <p style="text-align:center;max-width:800px;margin:auto;color:#ccc">
+    A Ticnes AI é uma empresa angolana especializada em Inteligência Artificial, Cibersegurança
+    e Ciência de Dados, focada na inovação tecnológica e no impacto digital sustentável.
+  </p><br>
+  <p style="text-align:center;max-width:800px;margin:auto;color:#ccc">
+    A Ticnes AI é uma empresa angolana dedicada ao fornecimento de serviços e formação 
+    de ciber-segurança e Inteligência
+    artificial
+  </p>
+</section>
+
+<section id="servicos" class="section">
+  <h2>Nossos Serviços</h2>
+  <div class="cards">
+    <div class="card"><h3>🤖 Inteligência Artificial</h3><p>Automação inteligente e Machine Learning</p></div>
+    <div class="card"><h3>📊 Ciência de Dados</h3><p>Análise estratégica e Big Data</p></div>
+    <div class="card"><h3>🔐 Cibersegurança</h3><p>Proteção de infraestruturas digitais</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Impactos & Resultados</h2>
+  <div class="stats">
+    <div class="stat"><h3>+120</h3><p>Projetos executados</p></div>
+    <div class="stat"><h3>+80</h3><p>Organizações atendidas</p></div>
+    <div class="stat"><h3>95%</h3><p>Taxa de satisfação</p></div>
+    <div class="stat"><h3>24/7</h3><p>Suporte técnico</p></div>
+  </div>
+</section>
+
+<section id="contactos" class="section">
+  <h2>Contactos</h2>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h3>📍 Localização</h3>
+      <p>Rua dos generais, Condomínio das oliveiras,Patriota,Luanda,Angola</p>
+    </div>
+    <div class="contact-card">
+      <h3>📧 Email</h3>
+      <p>info@ticnes.ai</p>
+    </div>
+    <div class="contact-card">
+      <h3>📞 Telefone</h3>
+      <p>+244 953-186-182</p>
+    </div>
+  </div>
+  <section id="estagiario" class="section">
+  <h2>Estagiário Ticnes</h2>
+  <div class="cards">
+
+    <a class="card" 
+       href="https://drive.google.com/drive/folders/1Jl9mTKuMhIdtP8lCDKIIIm2-NhU3Y3hm?usp=drive_link" 
+       target="_blank" style="color: white;">
+       📁 Google Drive <br>
+       <small>Tarefas do Estágio</small>
+    </a>
+
+    <a class="card" 
+       href="https://www.linkedin.com/in/mauro-dos-santos-cardoso-199451398/" 
+       target="_blank" style="color: white;">
+       💼 LinkedIn <br>
+       <small>Perfil Profissional</small>
+    </a>
+    
+    <a class="card" 
+       href="https://github.com/maurodossantoscardoso0-dot" 
+       target="_blank" style="color: white;">
+       💻 GitHub <br>
+       <small>Repositórios & Projetos</small>
+    </a>
+      </div>
+       <br><br>
+     <h2>Site + IA</h2>
+       <div class="cards">
+
+     <a class="card" 
+       href="https://github.com/maurodossantoscardoso0-dot/site-com-ia" 
+       target="_blank" style="color: white;">
+       💻 GitHub <br>
+       <small>Repositório</small>
+    </a>
+
+    <a class="card" 
+       href="site com ia/index.html" 
+       target="_blank" style="color: white;">
+       💻 Ver agora <br>
+    </a>
+     </div>
+
+    <br><br>
+     <h2>Programa de autoavaliação</h2>
+         <div class="cards">
+     <a class="card" 
+       href="https://github.com/maurodossantoscardoso0-dot/autoavaliacao" 
+       target="_blank" style="color: white;">
+       💻 GitHub <br>
+       <small>Repositório</small
+    </a>
+
+    <a class="card" 
+       href="autoavaliacao/index.html" 
+       target="_blank" style="color: white;">
+       💻 Ver agora <br>
+    </a>
+     </div>
+
+    <br><br>
+     <h2>Programa de expansão</h2>
+       <div class="cards">
+     <a class="card" 
+       href="https://github.com/maurodossantoscardoso0-dot/expansao" 
+       target="_blank" style="color: white;">
+       💻 GitHub <br>
+       <small>Repositório</small>
+    </a>
+
+    <a class="card" 
+       href="algoritmo de expansao/index.html" 
+       target="_blank" style="color: white;">
+       💻 Ver agora <br>
+    </a>
+    </div>
+</section>
+
+<script>
+  window.addEventListener('load',()=>document.getElementById('loader').style.display='none')
+
+ScrollReveal().reveal('.section',{
+  delay:200,
+  distance:'60px',
+  origin:'bottom',
+  duration:1000
+})
+</script>
+
+<footer>© 2026 Ticnes AI — Todos os direitos reservados/  desenvolvido por Mauro Cardoso</footer>
+</body>
+</html>
